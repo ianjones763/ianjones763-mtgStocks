@@ -11,9 +11,10 @@
   <!-- Nav bar at top -->
   <div class="topnav">
     <div class="padding"> </div>
-    <a class="active" href="#home">Home</a>
-    <a href="#about">Cards</a>
-    <a href="#contact">Stocks</a>
+    <div style="background-color:blue">MTG Simulator</div>
+    <div>CurrDate</div>
+    <button class="button back" type="button" title="Simulate 1 week forward"> <span> Back </span> </button>
+    <button class="button forward" type="button" title="Siimulate 1 week backward"> <span> Forward </span></button>
     <input id= "search" type="search" placeholder="Search cards...">
     <div class="padding"> </div>
   </div>
@@ -45,7 +46,14 @@
   <div style="width:60%; margin-left:20%; height:1px; background-color: black; opacity: 0.5"> </div>
 
   <!-- Visualization area -->
-  <div id="vis"> </div>
+  <div id=visAndList style="display:flex"> 
+    <div id="vis"> </div>
+    <div id="cardlistContainer"> 
+      <div style="text-align:center"> User Cards </div>
+      <div id="cardList"> </div>
+    </div>
+  </div>
+
 
 </div>
 

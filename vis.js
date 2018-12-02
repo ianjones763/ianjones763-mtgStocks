@@ -64,7 +64,7 @@ function display() {
     };
     var graphHeight = 4/5 * visHeight;
     var legendWidth = (2/10) * visWidth;
-    var legendHeight = (3/4) * graphHeight;
+    var legendHeight = (1/2) * graphHeight;
     drawLegend(cardData[Object.keys(cardData)[rand]], svg, legendWidth, legendHeight, legendMargin);			// Display legend of random card
 
 
@@ -80,6 +80,11 @@ function display() {
     drawGraph(cardData[Object.keys(cardData)[rand]], svg, graphX, graphWidth, graphHeight, graphMargin);		// Display graph of random card
 
 
+    /* User card list functionality */
+    var cardList = document.getElementById('cardList');
+    cardList.innerHTML = "<p> new paragraph </p>" + cardList.innerHTML;
+
+
     /* Search functionality */
    	var search = document.querySelector("#search");
 	var timeout = null;
@@ -89,6 +94,31 @@ function display() {
 			updateVis(svg, legendWidth, legendHeight, graphX, graphWidth, graphHeight, legendMargin, graphMargin);
 		}, 150);			
 	}
+
+	/* Back/forward simulator functionality */
+	var backButton = document.querySelector(".button.back");
+	backButton.onclick = function(d) {
+		 backSimulate();
+	}
+	var forwardButton = document.querySelector(".button.forward");
+	forwardButton.onclick = function(d) {
+		 forwardSimulate();
+	}
+}
+
+
+/*
+ * Simulates moving the market back in time
+ */
+function backSimulate() {
+	console.log("simulate back");
+}
+
+/*
+ * Simulates moving the market forward in time
+ */
+function forwardSimulate() {
+	console.log("simulate forward");
 }
 
 
@@ -113,7 +143,6 @@ function calculatePricesOverTime(data) {
 
 	for (i = 0; i < data.length; i++) {
 		var elem = data[i];
-		console.log(elem);
 		if (elem.value > max) max = elem.value;
 		if (elem.value < min) min = elem.value;
 		avg += elem.value;
@@ -121,6 +150,7 @@ function calculatePricesOverTime(data) {
 	avg /= data.length;
 	return [max.toFixed(2), min.toFixed(2), avg.toFixed(2)];
 }
+
 
 
 /*
@@ -140,53 +170,63 @@ function drawLegend(data, svg, width, height, margin) {
 	var defs = g.append("defs")
 		.attr("class", "graph");
 
-	// create filter with id #drop-shadow
-	// height=130% so that the shadow is not clipped
-	var filter = defs.append("filter")
-	    .attr("id", "drop-shadow")
-	    .attr("height", "130%");
+	// // create filter with id #drop-shadow
+	// // height=130% so that the shadow is not clipped
+	// var filter = defs.append("filter")
+	//     .attr("id", "drop-shadow")
+	//     .attr("height", "130%");
 
-	// SourceAlpha refers to opacity of graphic that this filter will be applied to
-	// convolve that with a Gaussian with standard deviation 3 and store result
-	// in blur
-	filter.append("feGaussianBlur")
-	    .attr("in", "SourceAlpha")
-	    .attr("stdDeviation", 6)
-	    .attr("result", "blur");
+	// // SourceAlpha refers to opacity of graphic that this filter will be applied to
+	// // convolve that with a Gaussian with standard deviation 3 and store result
+	// // in blur
+	// filter.append("feGaussianBlur")
+	//     .attr("in", "SourceAlpha")
+	//     .attr("stdDeviation", 6)
+	//     .attr("result", "blur");
 
-	// translate output of Gaussian blur to the right and downwards with 2px
-	// store result in offsetBlur
-	filter.append("feOffset")
-	    .attr("in", "blur")
-	    .attr("dx", 3)
-	    .attr("dy", 3)
-	    .attr("result", "offsetBlur");
+	// // translate output of Gaussian blur to the right and downwards with 2px
+	// // store result in offsetBlur
+	// filter.append("feOffset")
+	//     .attr("in", "blur")
+	//     .attr("dx", 3)
+	//     .attr("dy", 3)
+	//     .attr("result", "offsetBlur");
 
-	// overlay original SourceGraphic over translated blurred opacity by using
-	// feMerge filter. Order of specifying inputs is important!
-	var feMerge = filter.append("feMerge");
+	// // overlay original SourceGraphic over translated blurred opacity by using
+	// // feMerge filter. Order of specifying inputs is important!
+	// var feMerge = filter.append("feMerge");
 
-	feMerge.append("feMergeNode")
-	    .attr("in", "offsetBlur");
-	feMerge.append("feMergeNode")
-	    .attr("in", "SourceGraphic");
+	// feMerge.append("feMergeNode")
+	//     .attr("in", "offsetBlur");
+	// feMerge.append("feMergeNode")
+	//     .attr("in", "SourceGraphic");
 
-	// for each rendered node, apply #drop-shadow filter
+	// // for each rendered node, apply #drop-shadow filter
+	// var item = g.append("rect")
+	// 	.attr("x", margin.left)
+	// 	.attr("y", margin.top)
+	//     .attr("width", width)
+	//     .attr("height", height)
+	//     .attr("fill", "#f2f2f2")
+	//     .attr("stroke-width", 2)
+	    // .style("filter", "url(#drop-shadow)")
 	var item = g.append("rect")
 		.attr("x", margin.left)
 		.attr("y", margin.top)
+		.attr("rx", 5)
+		.attr("ry", 5)
 	    .attr("width", width)
 	    .attr("height", height)
-	    .attr("fill", "#ddd")
+	    .attr("fill", "#f2f2f2")
 	    .attr("stroke-width", 2)
-	    .style("filter", "url(#drop-shadow)")
 
-	var v_spacing = 30;
+
+	var v_spacing = 60;
 	var h_spacing = 10;
 	// Legend title
 	g.append("text")
-		.attr("x", width / 2)
-		.attr("y", margin.top + v_spacing)
+		.attr("x", width / 2 + 10)
+		.attr("y", margin.top + 40)
 		.attr("font-size", 24)
 		.attr("text-anchor", "middle")
 		.text("Record Over Time")
@@ -331,7 +371,7 @@ function drawGraph(data, svg, x, width, height, margin) {
 	    focus.attr("transform", "translate(" + xVal(d.date) + "," + yVal(d.value) + ")");
 	    lineFocus.attr("transform", "translate(" + xVal(d.date) + ", 0)");
     	focus.select("#date").text(formatDate(d.date));
-    	focus.select("#price").text("$" + d.value);
+    	focus.select("#price").text("$" + d.value.toFixed(2));
   	}
 
   	// format date to be day, month, year
@@ -370,7 +410,6 @@ function drawGraph(data, svg, x, width, height, margin) {
  * If word is found, updates the vis to display new card info
  */
 function updateVis(svg, legendWidth, legendHeight, graphX, graphWidth, graphHeight, legendMargin, graphMargin) {
-	console.log("searching cards");
 	var search = document.querySelector("#search");
 
 	// If a word is found
@@ -379,6 +418,7 @@ function updateVis(svg, legendWidth, legendHeight, graphX, graphWidth, graphHeig
 		d3.selectAll(".graph").remove();
 		drawLegend(cardData[search.value], svg, legendWidth, legendHeight, legendMargin);
 		drawGraph(cardData[search.value], svg, graphX, graphWidth, graphHeight, graphMargin);
+		updateHeader(search.value, cardData[search.value]);
 
 	}
 }
