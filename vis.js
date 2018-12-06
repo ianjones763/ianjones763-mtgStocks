@@ -6,14 +6,11 @@ const MARKER_PRICE_COLOR = "steelblue";
 const MARKER_LINE_COLOR = "#cccccc";
 
 var startDate = new Date("12/5/18");
-var endDate = new Date("7/13/21");
-// var endDate = new Date("12/1/28");
+var currDate = new Date("12/5/23");
+var currIndex = 1826;	// Index to keep track of current date
+var endDate = new Date("12/1/28");
+// var maxDate = new Date("12/1/28");
 var cardData = {};
-// var cardData = {
-// 	"card1": {"2017-12-31":5.74,"2018-01-01":6.00,"2018-01-02":7.56,"2018-01-03":7.00,"2018-01-04":10.30,"2018-01-05":10.2,"2018-01-06":10.1,"2018-01-07":9.8,"2018-01-08":7.42,"2018-01-09":7.3,"2018-01-10":7.5,"2018-01-11":7.3,"2018-01-12":7.3,"2018-01-13":7.3,"2018-01-14":7.3,"2018-01-15":4.5,"2018-01-16":4.5,"2018-01-17":4.5,"2018-01-18":4.5,"2018-01-19":4.5,"2018-01-20":3.2,"2018-01-21":3.2,"2018-01-22":3.2},
-// 	"card2": {"2017-12-31":4.5,"2018-01-01":6.00,"2018-01-02":2.4,"2018-01-03":2.4,"2018-01-04":2.4,"2018-01-05":7.4,"2018-01-06":7.4,"2018-01-07":9.8,"2018-01-08":5.5,"2018-01-09":5.5,"2018-01-10":5.7,"2018-01-11":5.5,"2018-01-12":7.3,"2018-01-13":5.5,"2018-01-14":5.4,"2018-01-15":5.3,"2018-01-16":5.2,"2018-01-17":4.5,"2018-01-18":4.2,"2018-01-19":4.0,"2018-01-20":3.9,"2018-01-21":3.8,"2018-01-22":3.7},
-//  	"card3": {"2017-12-31":13860.1363,"2018-01-01":13412.44,"2018-01-02":14740.7563,"2018-01-03":15134.6513,"2018-01-04":15155.2263,"2018-01-05":16937.1738,"2018-01-06":17135.8363,"2018-01-07":16178.495,"2018-01-08":14970.3575,"2018-01-09":14439.4738,"2018-01-10":14890.7225,"2018-01-11":13287.26,"2018-01-12":13812.715,"2018-01-13":14188.785,"2018-01-14":13619.0288,"2018-01-15":13585.9013,"2018-01-16":11348.02,"2018-01-17":11141.2488,"2018-01-18":11250.6475,"2018-01-19":11514.925,"2018-01-20":12759.6413,"2018-01-21":11522.8588,"2018-01-22":10772.15,"2018-01-23":10839.8263,"2018-01-24":11399.52,"2018-01-25":11137.2375,"2018-01-26":11090.0638,"2018-01-27":11407.1538,"2018-01-28":11694.4675,"2018-01-29":11158.3938,"2018-01-30":10034.9975,"2018-01-31":10166.5063,"2018-02-01":9052.5763,"2018-02-02":8827.63,"2018-02-03":9224.3913,"2018-02-04":8186.6488,"2018-02-05":6914.26,"2018-02-06":7700.3863,"2018-02-07":7581.8038,"2018-02-08":8237.2363,"2018-02-09":8689.8388,"2018-02-10":8556.6125,"2018-02-11":8070.7963,"2018-02-12":8891.2125,"2018-02-13":8516.2438,"2018-02-14":9477.84,"2018-02-15":10016.4888,"2018-02-16":10178.7125,"2018-02-17":11092.1475,"2018-02-18":10396.63,"2018-02-19":11159.7238,"2018-02-20":11228.2413,"2018-02-21":10456.1725,"2018-02-22":9830.4263,"2018-02-23":10149.4625,"2018-02-24":9682.3825,"2018-02-25":9586.46,"2018-02-26":10313.0825,"2018-02-27":10564.4188,"2018-02-28":10309.6413,"2018-03-01":10907.59,"2018-03-02":11019.5213,"2018-03-03":11438.6513,"2018-03-04":11479.7313,"2018-03-05":11432.9825,"2018-03-06":10709.5275,"2018-03-07":9906.8,"2018-03-08":9299.2838,"2018-03-09":9237.05,"2018-03-10":8787.1638,"2018-03-11":9532.7413,"2018-03-12":9118.2713,"2018-03-13":9144.1475,"2018-03-14":8196.8975,"2018-03-15":8256.9938,"2018-03-16":8269.3275,"2018-03-17":7862.1088,"2018-03-18":8196.0225,"2018-03-19":8594.1913,"2018-03-20":8915.9038,"2018-03-21":8895.4,"2018-03-22":8712.8913,"2018-03-23":8918.7438,"2018-03-24":8535.8938,"2018-03-25":8449.835,"2018-03-26":8138.3363,"2018-03-27":7790.1575,"2018-03-28":7937.205,"2018-03-29":7086.4875,"2018-03-30":6844.3213,"2018-03-31":6926.0175,"2018-04-01":6816.74}
-// }
 
 /*
  * Convert data to a dictionary of {cardname: {date:value info}} 
@@ -38,24 +35,16 @@ function parseData(data) {
  * Sets up initial display
  * Draws legend and graph with a random card
  */
-function display() {
+function display(svg) {
 
-	console.log("display")
+	document.getElementById("currdate").innerHTML = currDate.toString();
+
 	// Parse the data
 	var rand = Math.floor(Math.random() * Object.keys(cardData).length);			// Initialize page to dispaly random card
-
-	// Vis area dimensions
-	var visWidth  = d3.select("#vis").node().offsetWidth,
-	    visHeight = d3.select("#vis").node().offsetHeight;
 
 	// Set max height for cardlist vis
 	var cardList = document.getElementById('cardListContainer');
     cardList.style.height = visHeight + "px";
-
-	// Set up vis svg
-	var svg = d3.select('#vis').append('svg')
-		.attr('width', visWidth)
-        .attr('height', visHeight)
 
     /* Update vis header */
     updateHeader(Object.keys(cardData)[rand], cardData[Object.keys(cardData)[rand]]);
@@ -73,15 +62,15 @@ function display() {
     };
     var graphWidth = visWidth - graphMargin.left - graphMargin.right;
     var graphX = graphMargin.left;
-    drawGraph(cardData[Object.keys(cardData)[rand]], endDate, svg, graphX, graphWidth, graphHeight, graphMargin);		// Display graph of random card
+    drawGraph(cardData[Object.keys(cardData)[rand]], currDate, svg, graphX, graphWidth, graphHeight, graphMargin);		// Display graph of random card
 
 
     /* Buy/Sell card functionality */
-	var buyButton = document.querySelector(".button.buy");
+	var buyButton = document.querySelector(".buysell.buy");
 	buyButton.onclick = function(d) {
 		 buyCard();
 	}
-	var sellButton = document.querySelector(".button.sell");
+	var sellButton = document.querySelector(".buysell.sell");
 	sellButton.onclick = function(d) {
 		 sellCard();
 	}
@@ -100,11 +89,11 @@ function display() {
 	/* Back/forward simulator functionality */
 	var backButton = document.querySelector(".button.back");
 	backButton.onclick = function(d) {
-		 backSimulate();
+		 backSimulate(svg, graphX, graphWidth, graphHeight, graphMargin);
 	}
 	var forwardButton = document.querySelector(".button.forward");
 	forwardButton.onclick = function(d) {
-		 forwardSimulate();
+		 forwardSimulate(svg, graphX, graphWidth, graphHeight, graphMargin);
 	}
 }
 
@@ -130,15 +119,38 @@ function sellCard() {
 /*
  * Simulates moving the market back in time
  */
-function backSimulate() {
-	console.log("simulate back");
+function backSimulate(svg, graphX, graphWidth, graphHeight, graphMargin) {
+	currDate.subtractMonths(1);
+
+	// Only allow moving backwards through time for data that exists
+	if(currDate - startDate > 0) {
+		document.getElementById("currdate").innerHTML = currDate.toString();
+		drawGraph(cardData[document.getElementById("cardname").innerHTML], currDate, svg, graphX, graphWidth, graphHeight, graphMargin);
+		updateDateIndex(cardData[currCard]);
+		updateHeader(currCard, cardData[currCard]);
+		updateLegend(cardData[currCard]);
+	} else {
+		currDate.addMonths(1);
+	}
+
 }
 
 /*
  * Simulates moving the market forward in time
  */
-function forwardSimulate() {
-	console.log("simulate forward");
+function forwardSimulate(svg, graphX, graphWidth, graphHeight, graphMargin) {
+	currDate.addMonths(1);
+
+	// Only allow moving forwards through time for data that exists
+	if(endDate - currDate > 0) {
+		document.getElementById("currdate").innerHTML = currDate.toString();
+		drawGraph(cardData[document.getElementById("cardname").innerHTML], currDate, svg, graphX, graphWidth, graphHeight, graphMargin);
+		updateDateIndex(cardData[currCard]);
+		updateHeader(currCard, cardData[currCard]);
+		updateLegend(cardData[currCard]);
+	} else {
+		currDate.subtractMonths(1);
+	}
 }
 
 
@@ -147,10 +159,10 @@ function forwardSimulate() {
  */
 function updateHeader(card, data) {
 	currCard = card;
-	var avg = data[data.length-1].value;
+	var avg = data[currIndex].value;
+	console.log("avg from " + data[currIndex].date);
 	document.getElementById("cardname").innerHTML = card;
-	document.getElementById("avgprice").innerHTML = "$" + avg;
-	document.getElementById("marketprice").innerHTML = "$" + avg;
+	document.getElementById("marketprice").innerHTML = "$" + avg.toFixed(2);
 }
 
 /*
@@ -166,6 +178,7 @@ function updateLegend(data) {
 	document.getElementById("maxprice").innerHTML = "$" + maxPrice;
 	document.getElementById("minprice").innerHTML = "$" + minPrice;
 	document.getElementById("avgprice").innerHTML = "$" + avgPrice;
+	// document.getElementById("avgpriceHeader").innerHTML = "$" + avgPrice;
 }
 
 
@@ -177,7 +190,7 @@ function calculatePricesOverTime(data) {
 	    min = 1000000.0,
 		avg = 0.0;
 
-	for (i = 0; i < data.length; i++) {
+	for (i = 0; i <= currIndex; i++) {
 		var elem = data[i];
 		if (elem.value > max) max = elem.value;
 		if (elem.value < min) min = elem.value;
@@ -191,7 +204,9 @@ function calculatePricesOverTime(data) {
 /*
  * Renders the graph with the given card data
  */
-function drawGraph(data, endDate, svg, x, width, height, margin) {
+function drawGraph(data, currDate, svg, x, width, height, margin) {
+	// re-render graph
+	d3.selectAll(".graph").remove();
 
 	// x and y scales
 	var xVal = d3.scaleTime().rangeRound([0, width]);
@@ -202,7 +217,7 @@ function drawGraph(data, endDate, svg, x, width, height, margin) {
 	   .x(function(d) { return xVal(d.date)})
 	   .y(function(d) { return yVal(d.value)})
 	   // xVal.domain(d3.extent(data, function(d) { return d.date }));
-	xVal.domain([startDate, endDate]);
+	xVal.domain([startDate, currDate]);
 	yVal.domain(d3.extent(data, function(d) { return d.value }));
 
 	var xShift = x + margin.left;
@@ -287,36 +302,8 @@ function drawGraph(data, endDate, svg, x, width, height, margin) {
 	        d = x0 - d0.date > d1.date - x0 ? d1 : d0;
 	    focus.attr("transform", "translate(" + xVal(d.date) + "," + yVal(d.value) + ")");
 	    lineFocus.attr("transform", "translate(" + xVal(d.date) + ", 0)");
-    	focus.select("#date").text(formatDate(d.date));
+    	focus.select("#date").text(d.date.toString());
     	focus.select("#price").text("$" + d.value.toFixed(2));
-  	}
-
-  	// format date to be day, month, year
-  	function formatDate(date) {
-  		const days = [
-  			"Monday",
-  			"Tuesday",
-  			"Wednesday",
-  			"Thursday",
-  			"Friday",
-  			"Saturday",
-  			"Sunday"
-  		];
-  		const months = [
-  			"January",
-  			"February",
-  			"March",
-  			"April",
-  			"May",
-  			"June",
-  			"July",
-  			"August",
-  			"September",
-  			"October",
-  			"November",
-  			"December"
-  		];
-  		return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
   	}
 }
 
@@ -332,8 +319,7 @@ function updateVis(svg, graphX, graphWidth, graphHeight, graphMargin) {
 	// If a word is found
 	if (search.value in cardData) {
 
-		d3.selectAll(".graph").remove();
-		drawGraph(cardData[search.value], new Date("2018-04-01"), svg, graphX, graphWidth, graphHeight, graphMargin);
+		drawGraph(cardData[search.value], currDate, svg, graphX, graphWidth, graphHeight, graphMargin);
 		updateHeader(search.value, cardData[search.value]);
 		updateLegend(cardData[search.value]);
 	}
@@ -360,9 +346,129 @@ Date.prototype.addMonths = function (value) {
     this.setDate(1);
     this.setMonth(this.getMonth() + value);
     this.setDate(Math.min(n, this.getDaysInMonth()));
-    console.log(this)
     return this;
 };
+Date.prototype.subtractMonths = function (value) {
+    var n = this.getDate();
+    this.setDate(1);
+    this.setMonth(this.getMonth() - value);
+    this.setDate(Math.min(n, this.getDaysInMonth()));
+    return this;
+};
+Date.prototype.toString = function () {
+	// format date to be day, month, year
+	const days = [
+		"Monday",
+		"Tuesday",
+		"Wednesday",
+		"Thursday",
+		"Friday",
+		"Saturday",
+		"Sunday"
+	];
+	const months = [
+		"January",
+		"February",
+		"March",
+		"April",
+		"May",
+		"June",
+		"July",
+		"August",
+		"September",
+		"October",
+		"November",
+		"December"
+	];
+	return days[this.getDay()] + ", " + months[this.getMonth()] + " " + this.getDate() + ", " + this.getFullYear();
+}
+
+
+function updateDateIndex(data) {
+	for (var i = 0; i < data.length; i++) {
+		if (data[i].date.getTime() == currDate.getTime()) {
+			currIndex = i;
+			return;
+		}
+	}
+}
+
+
+// function startLoadingAnimation(svg, width, height) {
+// 	const duration = 500;
+// 	const r = 80;
+// 	const x1offset = 76.08;
+// 	const y1offset = 24.7;
+// 	const x2offset = 47.023;
+// 	const y2offset = 64.72;
+
+// 	const x1 = visWidth / 2,
+// 		  y1 = visHeight / 2 - r,
+// 		  x2 = visWidth / 2 + x1offset,
+// 		  y2 = visHeight / 2 - y1offset,
+// 		  x3 = visWidth / 2 + x2offset,
+// 	      y3 = visHeight / 2 + y2offset,
+// 		  x4 = visWidth / 2 - x2offset,
+// 		  y4 = visHeight / 2 + y2offset,
+// 		  x5 = visWidth / 2 - x1offset,
+// 		  y5 = visHeight / 2 - y1offset;
+
+
+// 	// top circle
+// 	var c1 = svg.append("circle")
+// 		.attr("r", 5)
+// 		.attr("cx", x1)
+// 		.attr("cy", y1)
+// 	// top right circle
+// 	var c2 = svg.append("circle")
+// 		.attr("r", 5)
+// 		.attr("cx", x2)
+// 		.attr("cy", y2)
+// 	// bottom right circle
+// 	var c3 = svg.append("circle")
+// 		.attr("r", 5)
+// 		.attr("cx", x3)
+// 		.attr("cy", y3)
+// 	// bottom left circle
+// 	var c4 = svg.append("circle")
+// 		.attr("r", 5)
+// 		.attr("cx", x4)
+// 		.attr("cy", y4)
+// 	// top left circle
+// 	var c5 = svg.append("circle")
+// 		.attr("r", 5)
+// 		.attr("cx", x5)
+// 		.attr("cy", y5)
+
+
+
+// 	repeat();
+// 	function repeat() {
+// 		console.log("repeating...")
+// 		c1.transition()
+// 			.duration(duration)
+// 			.attr("cx", x2)
+// 			.attr("cy", y2)
+// 		  .transition()
+// 			.duration(duration)
+// 			.attr("cx", x3)
+// 			.attr("cy", y3)
+// 		  .transition()
+// 			.duration(duration)
+// 			.attr("cx", x4)
+// 			.attr("cy", y4)
+// 		  .transition()
+// 			.duration(duration)
+// 			.attr("cx", x5)
+// 			.attr("cy", y5)		  
+// 		  .transition()
+// 			.duration(duration)
+// 			.attr("cx", x1)
+// 			.attr("cy", y1)
+// 			.on("end", repeat)
+
+// 	}
+// }
 
 
 
@@ -370,8 +476,21 @@ Date.prototype.addMonths = function (value) {
 //////////////////////////////////////////////
 //////////////////// MAIN ////////////////////
 //////////////////////////////////////////////
+// Vis area dimensions
+var visWidth  = d3.select("#vis").node().offsetWidth,
+    visHeight = d3.select("#vis").node().offsetHeight;
+// Set up vis svg
+var svg = d3.select('#vis').append('svg')
+	.attr('width', visWidth)
+    .attr('height', visHeight)
+
+// startLoadingAnimation(svg, visWidth, visHeight);
 var i = 0;
-d3.csv("data/cards_database_small.csv", function(d) {
+d3.csv("data/cards_database.csv", function(d) {
+	// svg.append("circle")
+ //    	.attr("r", 5)
+ //    	.attr("cx", visWidth / 2)
+ //    	.attr("cy", visHeight / 2)
 	// Read in csv data, card by card
 	i++;
 	var name = "card" + i;
@@ -379,23 +498,20 @@ d3.csv("data/cards_database_small.csv", function(d) {
 
 	// Iterate through dates in csv, 
     Object.keys(d).forEach(function(date) {
-        // console.log(d[date]);
         prices[date] = d[date];
     });
 
     // Add card to database
     cardData[name] = prices;
+
+
+
 }).then(function (d) {
 	// Called after reading in the csv
 	// Convert data structure to include Date objects, then display
 	cardData = parseData(cardData);
-	display();
+	display(svg);
 });
-
-
-
-
-
 
 
 

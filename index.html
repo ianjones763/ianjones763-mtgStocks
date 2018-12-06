@@ -10,33 +10,33 @@
 
   <!-- Nav bar at top -->
   <div class="topnav">
-    <div class="padding"> </div>
-    <div style="background-color:blue">MTG Simulator</div>
-    <div>CurrDate</div>
+    <div class="padding-top"> </div>
+    <div id="logo">MTG <br> Simulator </div>
+    <div id="currdate">loading...</div>
     <button class="button back" type="button" title="Simulate 1 week forward"> <span> Back </span> </button>
     <button class="button forward" type="button" title="Simulate 1 week backward"> <span> Forward </span></button>
     <input id= "search" type="search" placeholder="Search cards...">
-    <div class="padding"> </div>
+    <div class="padding-top"> </div>
   </div>
 
   <!-- Body div, includes card name and prices -->
   <div class="bodyheader"> 
     <div class="padding"> </div>
     <div id="cardnameContainer"> 
-      <p id="cardname">CARD NAME</p>
+      <p id="cardname">loading...</p>
     </div>
 
     <div id="pricediv">
       <!-- Average price -->
-      <div> 
+<!--       <div> 
         <p class="priceheader"> AVERAGE </p>
-        <p class="price" id="avgprice"> $5.01 </p>
-      </div>
+        <p class="price" id="avgpriceHeader"> loading... </p>
+      </div> -->
 
       <!-- Market price -->
       <div> 
         <p class="priceheader"> MARKET </p>
-        <p class="price" id="marketprice"> $4.79 </p>
+        <p class="price" id="marketprice"> loading... </p>
       </div>
     </div>
     <div class="padding"> </div>
@@ -51,26 +51,26 @@
     <div id="legendcontainer"> 
       <!-- Legend -->
       <div id="legend"> 
-        <p align="center"> Record Over Time </p>
+        <p align="center" style="color:steelblue"> Record Over Time </p>
         <span class="legendinfo"> 
           <text> Max Price</text> 
-          <b id="maxprice"> $44.40 </b> 
+          <b id="maxprice"> loading... </b> 
         </span>
         <br>
         <span class="legendinfo"> 
           <text> Min Price</text> 
-          <b id="minprice"> $20.40 </b> 
+          <b id="minprice"> loading... </b> 
         </span>
         <br>
         <span class="legendinfo"> 
           <text> Avg Price</text> 
-          <b id="avgprice"> $32.40 </b> 
+          <b id="avgprice"> loading... </b> 
         </span>
       </div>
       <!-- Buy/sell buttons -->
       <div id="buysellContainer">
-        <button class="button buy" type="button" title="Buy this card"> <span> Buy </span> </button>
-        <button class="button sell" type="button" title="Sell this card"> <span> Sell </span></button>
+        <button class="buysell buy" type="button" title="Buy this card"> <span> Buy</button>
+        <button class="buysell sell" type="button" title="Sell this card"> <span> Sell </span></button>
       </div>
     </div> 
     <!-- Graph -->

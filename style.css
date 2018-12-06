@@ -11,7 +11,7 @@ body {
 .topnav {
     display: flex;
     overflow: hidden;
-    background-color: #e9e9e9;
+    background-color: steelblue;
 }
 
 /* Style the links inside the navigation bar */
@@ -26,7 +26,6 @@ body {
     font-size: 17px;
 }
 
-/* Style the links inside the navigation bar */
 .topnav button {
     align-self: left;
     display: block;
@@ -39,23 +38,40 @@ body {
 
 .button {
   border-radius: 4px;
-  background-color: #f4511e;
+  background-color: steelblue;
   border: none;
   color: #FFFFFF;
   text-align: center;
   font-size: 28px;
   padding: 20px;
-  width: 200px;
+  width: 140px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
 }
+
+.buysell {
+  border-radius: 4px;
+  background-color: steelblue;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  /*padding: 20px;*/
+  width: 140px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
 
 .button span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
+  font-size: 1.2em;
+  color: white;
 }
 
 /* Back button */
@@ -98,13 +114,13 @@ body {
 
 /* Style the search box inside the navigation bar */
 .topnav input[type=search] {
-    margin-left: auto;
+    /*margin-left: auto;*/
     padding: 6px;
     border: none;
     border-radius: 5px;
     margin-top: 8px;
     margin-bottom: 8px;
-    margin-right: 16px;
+    /*margin-right: 16px;*/
     font-size: 17px;
 }
 
@@ -125,7 +141,11 @@ body {
 
 /* Outer padding foer body header div */
 .padding {
-    width: 20%;
+    width: 15%;
+}
+
+.padding-top {
+    width: 32%;
 }
 
 
@@ -150,7 +170,7 @@ body {
 .bodyheader #cardnameContainer {
     margin-bottom: -50px;
     font-size: 40px;
-    color: blue;
+    color: steelblue;
 }
 
 /* Price div style */
@@ -180,11 +200,11 @@ body {
 #visAndList {
     margin-left: 15%;
     margin-right: 15%;
-    background-color: #e6e6e6; 
-    border-style: solid;
-    border-width: 1px;
-    border-color: #cccccc;
-    border-radius: 5px;
+    /*background-color: #e6e6e6; */
+    /*border-style: solid;*/
+    /*border-width: 1px;*/
+    /*border-color: #cccccc;*/
+    /*border-radius: 5px;*/
 }
 
 #legendcontainer {
@@ -216,7 +236,10 @@ body {
 
 
 #buysellContainer {
+    padding-top: 30px;
     flex: 2;
+    display: flex;
+    height: 70px;
 }
 
 #vis {
@@ -229,6 +252,7 @@ body {
     width: 15%;
     margin-top: 20px; 
     margin-bottom: 20px;
+    margin-left: 2.5%;
     margin-right: 2.5%;
     border-style: solid;
     border-width: 1px;
@@ -241,7 +265,16 @@ body {
     background-color: lightblue;
 }
 
+#logo {
+  font-size: 1em;
+  font-weight: bold;
+}
 
+
+#currdate {
+  width: 17%;
+  margin: auto;
+}
 
 
 
