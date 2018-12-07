@@ -394,83 +394,6 @@ function updateDateIndex(data) {
 }
 
 
-// function startLoadingAnimation(svg, width, height) {
-// 	const duration = 500;
-// 	const r = 80;
-// 	const x1offset = 76.08;
-// 	const y1offset = 24.7;
-// 	const x2offset = 47.023;
-// 	const y2offset = 64.72;
-
-// 	const x1 = visWidth / 2,
-// 		  y1 = visHeight / 2 - r,
-// 		  x2 = visWidth / 2 + x1offset,
-// 		  y2 = visHeight / 2 - y1offset,
-// 		  x3 = visWidth / 2 + x2offset,
-// 	      y3 = visHeight / 2 + y2offset,
-// 		  x4 = visWidth / 2 - x2offset,
-// 		  y4 = visHeight / 2 + y2offset,
-// 		  x5 = visWidth / 2 - x1offset,
-// 		  y5 = visHeight / 2 - y1offset;
-
-
-// 	// top circle
-// 	var c1 = svg.append("circle")
-// 		.attr("r", 5)
-// 		.attr("cx", x1)
-// 		.attr("cy", y1)
-// 	// top right circle
-// 	var c2 = svg.append("circle")
-// 		.attr("r", 5)
-// 		.attr("cx", x2)
-// 		.attr("cy", y2)
-// 	// bottom right circle
-// 	var c3 = svg.append("circle")
-// 		.attr("r", 5)
-// 		.attr("cx", x3)
-// 		.attr("cy", y3)
-// 	// bottom left circle
-// 	var c4 = svg.append("circle")
-// 		.attr("r", 5)
-// 		.attr("cx", x4)
-// 		.attr("cy", y4)
-// 	// top left circle
-// 	var c5 = svg.append("circle")
-// 		.attr("r", 5)
-// 		.attr("cx", x5)
-// 		.attr("cy", y5)
-
-
-
-// 	repeat();
-// 	function repeat() {
-// 		console.log("repeating...")
-// 		c1.transition()
-// 			.duration(duration)
-// 			.attr("cx", x2)
-// 			.attr("cy", y2)
-// 		  .transition()
-// 			.duration(duration)
-// 			.attr("cx", x3)
-// 			.attr("cy", y3)
-// 		  .transition()
-// 			.duration(duration)
-// 			.attr("cx", x4)
-// 			.attr("cy", y4)
-// 		  .transition()
-// 			.duration(duration)
-// 			.attr("cx", x5)
-// 			.attr("cy", y5)		  
-// 		  .transition()
-// 			.duration(duration)
-// 			.attr("cx", x1)
-// 			.attr("cy", y1)
-// 			.on("end", repeat)
-
-// 	}
-// }
-
-
 
 
 //////////////////////////////////////////////
@@ -484,13 +407,8 @@ var svg = d3.select('#vis').append('svg')
 	.attr('width', visWidth)
     .attr('height', visHeight)
 
-// startLoadingAnimation(svg, visWidth, visHeight);
 var i = 0;
 d3.csv("data/cards_database.csv", function(d) {
-	// svg.append("circle")
- //    	.attr("r", 5)
- //    	.attr("cx", visWidth / 2)
- //    	.attr("cy", visHeight / 2)
 	// Read in csv data, card by card
 	i++;
 	var name = "card" + i;
@@ -507,6 +425,8 @@ d3.csv("data/cards_database.csv", function(d) {
 
 
 }).then(function (d) {
+	// hide animation
+	document.querySelector("#vis").style.backgroundColor = "white";
 	// Called after reading in the csv
 	// Convert data structure to include Date objects, then display
 	cardData = parseData(cardData);

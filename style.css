@@ -198,6 +198,11 @@ body {
 
 /* VISUALIZATION AREA STYLE */
 #visAndList {
+    background-image: url("giphy3.gif");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 225px 225px;
     margin-left: 15%;
     margin-right: 15%;
     /*background-color: #e6e6e6; */
